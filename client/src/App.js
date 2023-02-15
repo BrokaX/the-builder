@@ -1,18 +1,14 @@
-import "./App.css";
-
-import { Routes, Route } from "react-router-dom";
-import Builder from "./components/Builder";
-import Canvas from "./components/Canvas";
-import Images from "./components/Images";
+import './App.css';
+import Canvas from './Components/Canvas';
+import Landing from './Components/Landing';
+import Navbar from './Components/Navbar';
 function App() {
+ 
   return (
     <div className="App">
-      <Builder />
-      <Canvas/>
-      <Routes>
-        <Route path="/images" element={<Images/>} />
-        <Route path="/" element={<Canvas/>} />
-      </Routes>
+      <Navbar />
+      {/* <Landing /> */}
+     <Canvas />
     </div>
   );
 }
