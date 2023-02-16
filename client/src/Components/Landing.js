@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import gjspic from "../assets/gjspic.png";
+
 export default function Landing() {
   return (
     <div className="Landing-page">
@@ -15,7 +17,7 @@ export default function Landing() {
             it is to create a stunning website that will impress your audience
             and help you achieve your goals.
           </p>
-          <button>Get Started</button>
+          <Link style={{textDecoration: "none"}}to="/register"><button>Get Started</button></Link>
         </div>
         <div className="Landing-page-main-right">
           <img src={gjspic} alt="gjs pic" />

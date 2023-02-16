@@ -9,8 +9,6 @@ export default function Canvas() {
   const [, setBuilder] = useState(null);
 
   const changeStyle = () => {
-    const menu = document.getElementsByClassName("fa-bars");
-    console.log(menu);
     const element = document.getElementsByClassName("gjs-pn-views-container")[0]
       .style;
     if (element.display === "none") {
@@ -19,6 +17,10 @@ export default function Canvas() {
       element.display = "none";
     }
   };
+  const openMenu = function () {
+    const menu = document.getElementById("open-menu");
+    menu.addEventListener("click", changeStyle);
+  };
 
   useEffect(() => {
     /* Creating the main builder's Canvas */
@@ -26,6 +28,7 @@ export default function Canvas() {
       container: "#builder",
       fromElement: false,
       width: "auto",
+      height: "95vh",
       storageManager: true,
       plugins: [plugin, forms, blocks],
     });
@@ -45,29 +48,27 @@ export default function Canvas() {
       {
         id: "open-menu",
         className: "fa-solid fa-bars",
-        command: function () {
-          changeStyle();
-          console.log(builder.Panels.config.defaults[2].buttons[3]);
-        },
-        attributes: { title: "Open Menu" },
+        command: changeStyle,
+        attributes: { title: "Open Menu", id: "open-menu", disabled: true },
         active: false,
         togglable: false,
+        run: changeStyle,
       },
     ]);
-const handleSave = () => {
-    const content = builder.getHtml();
-    const css = builder.getCss();
-    console.log(css, content);
-    // send the content and CSS to the server.
-  };
+
+    const handleSave = () => {
+      const content = builder.getHtml();
+      const css = builder.getCss();
+      console.log(css, content);
+      // send the content and CSS to the server.
+    };
     setBuilder(builder);
   }, []);
-  
+
   return (
     <div className="Canvas-container">
-      <div onClick={changeStyle}></div>
-      <div className="builder" id="builder">
-        <div className="scroll"></div>
+      <div className="builder" id="builder"></div>
+      <div className="Open-close" onClick={changeStyle}>
       </div>
     </div>
   );
