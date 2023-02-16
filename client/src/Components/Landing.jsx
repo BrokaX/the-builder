@@ -22,6 +22,7 @@ export default function Landing() {
         <div className="Landing-page-main-right">
           <img src={gjspic} alt="gjs pic" />
         </div>
+        
       </div>
     </div>
   );

@@ -183,20 +183,27 @@ iframe html{
   width: 50%;
 }
 
-.Menu h5,
+.Menu a,
 .Logo,
 .Account {
   cursor: pointer;
   padding: 1%;
+  text-decoration: none;
+  color: var(--color-main);
 }
 
-.Menu h5:hover,
+.Menu a:hover,
 .Logo:hover {
   background-color: var(--bg-sec);
+  color: var(--color-third);
   opacity: 0.8;
 }
+.Menu-hover{
+  width: 100%;
 
-/* Landing Page*/
+}
+/*************************** Landing Page ***********************************/
+
 .Landing-page {
   width: 100%;
   height: 100vh;
@@ -238,4 +245,19 @@ text-align: justify   ;
 }
 .Landing-page-main-right img{
   filter: sepia(5%), hue-rotate(10%);
+}
+
+/*************************** REGISTER ***********************************/
+
+.Register-container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Register-container form div{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  justify-items: sp;
 }
