@@ -11,8 +11,6 @@ export default function Login() {
           <input type='Email' name='email'/>          
           <label htmlFor='Password'>Password</label>
           <input type='password' name='password'/>
-          <label htmlFor='Password'>Confirm Password</label>
-          <input type='password' name='password2'/>
         </form>
         <p>Don't have an account yet? <Link to="/register">Create one</Link></p>
       </div>

@@ -13,7 +13,7 @@ export default function Navbar() {
         </div></Link>
         <div className="Menu">
           <Link to = {"/builder"}><h5>Build</h5></Link>
-          <h5>My templates</h5>
+          <Link to = {"/profile"}><h5>My-templates</h5></Link>
           <h5>Login</h5>
           <h5>Signup</h5>
         </div>
