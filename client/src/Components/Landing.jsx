@@ -4,10 +4,10 @@ import gjspic from "../assets/gjspic.png";
 
 export default function Landing() {
   return (
-    <div className="Landing-page">
-      <div className="Landing-page-main">
-        <div className="Landing-page-main-left">
-          <h1>Build Webpages Like a pro</h1>
+    <div className="landing-page">
+      <div className="landing-page-main">
+        <div className="landing-page-main-left">
+          <h1>Build Webpages Like a Pro</h1>
           <p>
             The builder is designed for businesses, bloggers, artists, and
             anyone else who wants to create a professional-looking website
@@ -17,12 +17,15 @@ export default function Landing() {
             it is to create a stunning website that will impress your audience
             and help you achieve your goals.
           </p>
-          <Link style={{textDecoration: "none"}}to="/register"><button>Get Started</button></Link>
+          <Link style={{ textDecoration: "none" }} to="/register">
+            <button className="get-started-btn">Get Started</button>
+          </Link>
         </div>
-        <div className="Landing-page-main-right">
-          <img src={gjspic} alt="gjs pic" />
+        <div className="landing-page-main-right">
+        <div class="sliding-container">
+  <div class="sliding-background"></div>
+</div>
         </div>
-        
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ const UserSchema = new Schema(
       type: String,
       default: "online",
     },
+    templates:[],
     date: {
       type: Date,
       default: Date.now
