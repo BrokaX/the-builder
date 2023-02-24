@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { getAllTemplatesById, deleteTemplate, updateUser } from "../apiHelpers";
-import grapesjs from "grapesjs";
+import {
+  getAllTemplatesById,
+  deleteTemplate,
+  updateUser,
+  deleteUser,
+} from "../apiHelpers";
 import Canvas from "./Canvas";
-
 export default function Profile() {
   const [template, setTemplate] = useState([]);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [message, setMessage] = useState("");
   const [deleteItemId, setDeleteItemId] = useState(null);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("details")));
-
 
   useEffect(() => {
     getAllTemplatesById()
@@ -67,15 +69,31 @@ export default function Profile() {
       Canvas.setStyle(css);
     } catch (error) {
       console.error(error);
-      // handle the error appropriately, such as displaying an error message to the user
+      
     }
   };
+
+  const handleDeleteUser = async () => {
+    if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+      try {
+        const id = user.id;
+        await deleteUser(id);
+        localStorage.removeItem("details");
+        localStorage.removeItem("user");
+        window.location.href = "/";
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  
   return (
     <div className="templates-container">
       <div className="profile-section">
         <div className="user-details">
           <h4>Edit your Details {user.name}</h4>
-          <img className="profile-pic"
+          <img
+            className="profile-pic"
             src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Clipart.png"
             alt="Profile"
           />
@@ -95,19 +113,20 @@ export default function Profile() {
                 value={user.email}
                 onChange={handleEmailChange}
               />
-              <button className="">Save</button>
+              <button className="save-profile">Save</button>
             </form>
 
             <div>
-              <input
+              <input className="change-password"
                 type="password"
-                value={user.password}
                 onChange={handlePasswordChange}
               />
               <button className="change-password">Change password</button>
             </div>
           </div>
-          <button className="delete-account">Delete Account</button>
+          <button className="delete-account" onClick={handleDeleteUser}>
+            Delete Account
+          </button>
         </div>
       </div>
       <div className="templates-section-wrapper">
@@ -124,61 +143,62 @@ export default function Profile() {
             </div>
           )}
           {message && <p className="delete-warning">{message}</p>}
+          {!template && <h1 className="delete-warning">Nothing to see here</h1>}
           {template &&
             template.map((item, index) => (
-              <div className="Templates cards" id={template[index]._id} key={index}>
-                  <div className="cards">
-          {/** CARD **/}
-          <div>
-            <div  className="card">
-              <img
-                src={template[index].image}
-                className="card__image"
-                alt="Business card"
-              />
-              <div className="card__overlay">
-                <div className="card__header">
-                  <img
-                    className="card__thumb"
-                    src={template[index].image}
-                    alt="Logo"
-                  />
-                  <div className="card__header-text">
-                    <h3 className="card__title">{template[index].title}</h3>
+              <div
+                className="Templates cards"
+                id={template[index]._id}
+                key={index}
+              >
+                <div className="cards">
+                  {/** CARD **/}
+                  <div>
+                    <div className="card">
+                      <img
+                        src={template[index].image}
+                        className="card__image"
+                        alt="Business card"
+                      />
+                      <div className="card__overlay">
+                        <div className="card__header">
+                          <img
+                            className="card__thumb"
+                            src={template[index].image}
+                            alt="Logo"
+                          />
+                          <div className="card__header-text">
+                            <h3 className="card__title">
+                              {template[index].title}
+                            </h3>
+                          </div>
+                        </div>
+                        <p className="card__description">
+                          {template[index].description}
+                        </p>
+                        <div>
+                          <button
+                            className="template-edit"
+                            onClick={handleOpenTemplate
+                              }
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className="template-delete"
+                            onClick={() =>
+                              handleDeleteWarning(template[index]._id)
+                            }
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <p className="card__description">{template[index].description}</p>
-                <div>
-                  <button
-                    className="template-edit"
-                    onClick={() => {
-                      const editor = grapesjs.init({
-                        container: "#gjs",
-                        height: "100%",
-                        fromElement: true,
-                        storageManager: { type: "none" },
-                      });
-                      editor.setComponents(template[index].html);
-                      editor.setStyle(template[index].css);
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="template-delete"
-                    onClick={() => handleDeleteWarning(template[index]._id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          </div>
-          {/** End of CARD **/}
-          {/** CARD **/}
-               
+                {/** End of CARD **/}
+                {/** CARD **/}
               </div>
             ))}
         </div>

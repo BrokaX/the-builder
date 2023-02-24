@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 // Retrieve the saved templates from the serer
 export const getAllTemplatesById = async () => {
   try {
@@ -40,11 +39,20 @@ export const templateSave = async (template) => {
 export const deleteTemplate = async (id) => {
   try {
     const res = await axios.delete(`/templates/${id}`);
-    return res
+    return res;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
+
+export const deleteUser = async (id) => {
+  try {
+    const res = await axios.delete(`/api/users/${id}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
 //User Signup
 export const userRegister = async (user) => {
   try {
@@ -58,7 +66,6 @@ export const userRegister = async (user) => {
     const data = res.data;
     return data;
   } catch (error) {
-    console.log(error.response.data); // log the error response data
     if (
       error.response.status === 400 &&
       error.response.data.email === "Email already exists"
@@ -90,7 +97,6 @@ export const userLogin = async (user) => {
     const data = await res.data;
     return data;
   } catch (error) {
-    console.log(error.response.data); // log the error response data
     if (
       error.response.status === 404 &&
       error.response.data.email === "Incorrect Email or password"
@@ -102,20 +108,19 @@ export const userLogin = async (user) => {
   }
 };
 
-
-export const updateUser = async (user) =>{
+export const updateUser = async (user) => {
   const res = await axios.put(`/${user}`, {
     id: user.id,
-        name: user.name,
-        email: user.email,
-        password: user.password,
+    name: user.name,
+    email: user.email,
+    password: user.password,
   });
-  const data = res.data
-  return data
-}
+  const data = res.data;
+  return data;
+};
 
 //user logout
 export const logoutUser = () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("user");
   localStorage.removeItem("details");
 };

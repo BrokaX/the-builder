@@ -7,8 +7,9 @@ import forms from "grapesjs-plugin-forms";
 import blocks from "grapesjs-blocks-basic";
 import { templateSave } from "../apiHelpers";
 import cover from "../assets/cover.jpg"
+
 export default function Canvas() {
-  const [, setBuilder] = useState(null);
+  const [builder, setBuilder] = useState(null);
 
   const changeStyle = () => {
     const element = document.getElementsByClassName("gjs-pn-views-container")[0]
@@ -18,10 +19,6 @@ export default function Canvas() {
     } else {
       element.display = "none";
     }
-  };
-  const openMenu = function () {
-    const menu = document.getElementById("open-menu");
-    menu.addEventListener("click", changeStyle);
   };
 
   useEffect(() => {
@@ -57,7 +54,6 @@ export default function Canvas() {
         run: changeStyle,
       },
     ]);
-
     const handleSave = async () => {
       try {
         const html = builder.getHtml();
@@ -81,7 +77,6 @@ export default function Canvas() {
 
     setBuilder(builder);
   }, []);
-
   return (
     
     <div className="Canvas-container">

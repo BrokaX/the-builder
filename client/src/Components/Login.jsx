@@ -18,55 +18,73 @@ const Login = () => {
 
     try {
       const res = await userLogin(user);
-      const token = res.token;
-      localStorage.setItem("details", JSON.stringify(res.user))
-      console.log(res.user)
-      authHeader(token);
-      navigate("/profile");
+      if (
+        res.email === "Email field Cannot be Empty" ||
+        res.password === "Password field cannot be Empty" ||
+        res.emailnotfound === "Incorrect Email or Password"
+      ) {
+        setErrors(res);
+      }
+
     } catch (error) {
-      setErrors({ ...errors, message: error.message });
-    }
+      console.log(error);
+      if (error.emailnotfound === "Incorrect Email or Password") {
+        setErrors({ ...error, emailnotfound: "Incorrect Email or Password" });
+      }
+    } 
+    const res = await userLogin(user);
+    const token = res.token;
+    localStorage.setItem("details", JSON.stringify(res.user))
+    authHeader(token);
+    navigate("/profile");
+    
   };
 
   return (
     <div className="Register-container">
       <div className="form-container">
-      <div className="Register-container-title">
-        <h4>Login to your account</h4>
+        <div className="Register-title">
+          <h4>Login to your account</h4>
+        </div>
+        <form className="register-form" noValidate onSubmit={onSubmit}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              onChange={onChange}
+              value={user.email}
+              error={errors.email}
+              id="email"
+              type="email"
+              name="email"
+            />
+            {errors.email && <span className="error">{errors.email}</span>}
+          </div>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              onChange={onChange}
+              value={user.password}
+              error={errors.password}
+              id="password"
+              type="password"
+              name="password"
+            />
+            {errors.password && (
+              <span className="error">{errors.password}</span>
+            )}
+          </div>
+          <div>
+            <button type="submit">Login</button>
+          </div>
+        </form>
+        <p className="already-have-an-account">
+          Don't have an account yet? <Link to="/register">Create one</Link>
+        </p>
+        {errors.emailnotfound && (
+          <span className="error">{errors.emailnotfound}</span>
+        )}
       </div>
-      <form className="register-form" noValidate onSubmit={onSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            onChange={onChange}
-            value={user.email}
-            error={errors.email}
-            id="email"
-            type="email"
-            name="email"
-          />
-          {errors.email && <span className="error">{errors.email}</span>}
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            onChange={onChange}
-            value={user.password}
-            error={errors.password}
-            id="password"
-            type="password"
-            name="password"
-          />
-          {errors.password && <span className="error">{errors.password}</span>}
-        </div>
-        <div>
-          <button type="submit">Login</button>
-        </div>
-      </form>
-      <p className="already-have-an-account">
-        Don't have an account yet? <Link to="/register">Create one</Link>
-      </p>
-    </div></div>
+    </div>
   );
 };
 

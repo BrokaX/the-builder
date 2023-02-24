@@ -160,7 +160,12 @@ iframe html {
 .CodeMirror-gutter {
   background-color: var(--bg-main);
 }
-
+/* Save template form*/
+.save-template-form{
+position: absolute;
+top: 25%;
+z-index: 100;
+}
 /* Nav Bar*/
 .Navar {
   display: flex;
@@ -374,17 +379,22 @@ iframe html {
   padding: 2%;
   font-size: 24px;
   color: #fff;
-  background: linear-gradient(to right, #0e0430, #420044);
+  background: linear-gradient(45deg, #220038, #460037, #420344, #001b35, #220038, #460037, #00202c, #003528);
+	background-size: 400% 400%;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
+
 }
 
 .get-started-btn:hover {
   outline: var(--color-main);
   transform: translateY(-3px);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  animation: gradient 10s ease infinite;
+  outline: solid 1px;
 }
 
 .landing-page-main-right img {
@@ -473,6 +483,15 @@ iframe html {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+.save-profile{
+  padding: 3%;
+  cursor: pointer;
+  border: solid 1px var(--color-main);
+}
+.save-profile:hover{
+  background-color: transparent;
+  color: var(--color-main);
 }
 .delete-account {
   padding: 4%;
@@ -600,6 +619,7 @@ width: 100%;
 .card__image {
   width: 100%;
   height: auto;
+  object-fit: cover;
 }
 
 .card__overlay {

@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import gjspic from "../assets/gjspic.png";
 
 export default function Landing() {
+  const user = localStorage.getItem("user")
   return (
     <div className="landing-page">
       <div className="landing-page-main">
@@ -17,13 +17,14 @@ export default function Landing() {
             it is to create a stunning website that will impress your audience
             and help you achieve your goals.
           </p>
-          <Link style={{ textDecoration: "none" }} to="/register">
+          <Link style={{ textDecoration: "none" }} to={user ? "/profile" : "/register"}>
+
             <button className="get-started-btn">Get Started</button>
           </Link>
         </div>
         <div className="landing-page-main-right">
-        <div class="sliding-container">
-  <div class="sliding-background"></div>
+        <div className="sliding-container">
+  <div className="sliding-background"></div>
 </div>
         </div>
       </div>
