@@ -7,12 +7,13 @@ const User = require("../../models/User.js");
 const keys = require("../../config/keys");
 
 //All users
-const getAllUsers = async (req, res) => {
-  User.find({}, function (err, users) {
+const getUser = async (req, res) => {
+  const id = req.params.id
+  User.find({_id: id}, function (err, user) {
     if (err) {
       res.status(500).send(err);
     } else {
-      res.json(users);
+      res.json(user);
     }
   });
 };
@@ -34,9 +35,11 @@ const Register = async (req, res) => {
     }
 
     const newUser = new User({
+      image: req.body.image,
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
+      
     });
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -83,7 +86,7 @@ const Login = async (req, res) => {
         name: user.name,
         email: user.email,
         password: user.password,
-        status: user.status,
+        image: user.image,
         date: user.date,
       };
       jwt.sign(
@@ -119,14 +122,13 @@ const editUser = async (req, res) => {
   const id = req.params.id;
   const name = req.body.name;
   const email = req.body.email;
-  const password = req.body.password;
+  const image = req.body.image
   if (!id && !name && !email) {
     return res.status(442).json({ message: "Invalid Details" });
   }
-  const newPass = bcrypt.hashSync(password, 10);
   let user;
   try {
-    user = await User.findByIdAndUpdate(id, { name, email, password: newPass });
+    user = await User.findByIdAndUpdate(id, { name, email, image });
   } catch (err) {
     console.log(err);
   }
@@ -136,9 +138,30 @@ const editUser = async (req, res) => {
   return res.status(200).json({ message: "Successfully updated" });
 };
 
+//Edit uers's Password
+const editUserPassword = async (req, res) => {
+  const id = req.params.id;
+  const password = req.body.password;
+  if (!id && !password) {
+    return res.status(442).json({ message: "Invalid Details" });
+  }
+  const newPass = bcrypt.hashSync(password, 10);
+  let user;
+  try {
+    user = await User.findByIdAndUpdate(id, { password: newPass });
+  } catch (err) {
+    console.log(err);
+  }
+  if (!user) {
+    return res.status(500).json({ message: "User not found" });
+  }
+  return res.status(200).json({ message: "Password Successfully updated" });
+};
+
 //Delete user
 const deleteUser = async (req, res) => {
   const id = req.params.id;
+  console.log(id)
   let user;
   try {
     user = await User.findByIdAndRemove(id);
@@ -151,4 +174,4 @@ const deleteUser = async (req, res) => {
   return res.status(200).json({ message: "User Successfully Deleted" });
 };
 
-module.exports = { getAllUsers, Register, Login, editUser, deleteUser };
+module.exports = { getUser, Register, Login, editUser, deleteUser, editUserPassword };

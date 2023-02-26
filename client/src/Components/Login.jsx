@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { userLogin, authHeader } from "../apiHelpers";
-
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
@@ -11,6 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
   const onChange = (e) => {
     setUser({ ...user, [e.target.id]: e.target.value });
+    setErrors("");
   };
 
   const onSubmit = async (e) => {
@@ -21,23 +22,33 @@ const Login = () => {
       if (
         res.email === "Email field Cannot be Empty" ||
         res.password === "Password field cannot be Empty" ||
+        res.passwordincorrect === "Incorrect Email or Password" ||
         res.emailnotfound === "Incorrect Email or Password"
       ) {
         setErrors(res);
+        toast.error("Unable to login, please check your details", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          style: { backgroundColor: "#1b3152", color: "#d7eefa" },
+        });
       }
-
     } catch (error) {
       console.log(error);
       if (error.emailnotfound === "Incorrect Email or Password") {
-        setErrors({ ...error, emailnotfound: "Incorrect Email or Password" });
+        setErrors({ ...error, emailnotfound: "Account not found" });
+        console.log(error);
       }
-    } 
+    }
     const res = await userLogin(user);
     const token = res.token;
-    localStorage.setItem("details", JSON.stringify(res.user))
-    authHeader(token);
-    navigate("/profile");
-    
+    if (res.user) {
+      localStorage.setItem("details", JSON.stringify(res.user));
+      authHeader(token);
+      toast.success(`Welcome ${res.user.name}`, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        style: { backgroundColor: "#1b3152", color: "#d7eefa" },
+      });
+      navigate("/profile");
+    }
   };
 
   return (
@@ -64,13 +75,18 @@ const Login = () => {
             <input
               onChange={onChange}
               value={user.password}
-              error={errors.password}
+              error={errors.password || errors.passwordincorrect}
               id="password"
               type="password"
               name="password"
             />
             {errors.password && (
-              <span className="error">{errors.password}</span>
+              <span className="error">
+                {errors.password || errors.passwordincorrect}
+              </span>
+            )}
+            {errors.passwordincorrect && (
+              <span className="error">{errors.passwordincorrect}</span>
             )}
           </div>
           <div>

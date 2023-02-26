@@ -1,14 +1,20 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { logoutUser } from "../apiHelpers";
 
 export default function Navbar() {
   const user = JSON.parse(localStorage.getItem("details"));
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logoutUser();
-    navigate("/");
+    navigate("/login");
+    toast.warning(`${user.name} is now logged out`, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      style: { backgroundColor: "#1b3152", color: "#d7eefa" },
+    });
   };
 
   return (
@@ -26,7 +32,7 @@ export default function Navbar() {
               <Link to="/profile">
                 <h5>My-templates</h5>
               </Link>
-              <Link onClick={handleLogout} to="/">
+              <Link onClick={handleLogout} to="/login">
                 <h5>Logout</h5>
               </Link>
             </>
@@ -36,7 +42,7 @@ export default function Navbar() {
                 <h5>Login</h5>
               </Link>
               <Link to="/register">
-                <h5>Signup</h5>
+                <h5>Register</h5>
               </Link>
             </>
           )}

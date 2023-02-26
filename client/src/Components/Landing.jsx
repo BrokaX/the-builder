@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Landing() {
-  const user = localStorage.getItem("user")
+  const user = localStorage.getItem("user");
   return (
     <div className="landing-page">
       <div className="landing-page-main">
@@ -17,15 +17,17 @@ export default function Landing() {
             it is to create a stunning website that will impress your audience
             and help you achieve your goals.
           </p>
-          <Link style={{ textDecoration: "none" }} to={user ? "/profile" : "/register"}>
-
+          <Link
+            style={{ textDecoration: "none" }}
+            to={user ? "/builder" : "/register"}
+          >
             <button className="get-started-btn">Get Started</button>
           </Link>
         </div>
         <div className="landing-page-main-right">
-        <div className="sliding-container">
-  <div className="sliding-background"></div>
-</div>
+          <div className="sliding-container">
+            <div className="sliding-background"></div>
+          </div>
         </div>
       </div>
     </div>

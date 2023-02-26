@@ -11,6 +11,7 @@ body {
 html {
   overflow: hidden;
 }
+
 .Canvas-container {
   height: 20%;
 }
@@ -161,10 +162,63 @@ iframe html {
   background-color: var(--bg-main);
 }
 /* Save template form*/
-.save-template-form{
-position: absolute;
-top: 25%;
-z-index: 100;
+.Canvas-template-title{
+  font-size: 16px;
+}
+.save-template-form {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 100;
+  display: block;
+  border: solid 1px var(--color-main);
+  width: 60%;
+  height: 50%;
+  padding: 2% 8%;
+  color: var(--color-main);
+  border-radius: 35px;
+  background-color: #11001fdc;
+  box-shadow: 1px 10px 10px 100vh rgba(6, 8, 31, 0.699);
+}
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+}
+.modal-content form input,
+.modal-content form textarea {
+  padding: 0.5% 2%;
+  border-radius: 15px;
+  border: solid 1px var(--color-main);
+  margin: 1% 0;
+  background-color: #33333383;
+  color: var(--color-main);
+  font-size: 18px;
+}
+.modal-content button {
+  float: right;
+  padding: 1%;
+  border-radius: 10px;
+  border: solid 1px var(--color-main);
+  background-color: var(--color-main);
+  color: black;
+  cursor: pointer;
+  width: 15%;
+  margin: 4% 2%;
+}
+.modal-content button:hover {
+  border: solid 1px var(--color-main);
+  background-color: transparent;
+  color: var(--color-main);
+}
+.modal-content span {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  font-size: large;
 }
 /* Nav Bar*/
 .Navar {
@@ -213,49 +267,49 @@ z-index: 100;
   color: var(--color-third);
 }
 /*************************** Login/Register******************/
-.Register-container{
+.Register-container {
   display: flex;
   align-items: center;
   flex-direction: column;
-	background: linear-gradient(-45deg, #220038, #550243, #00202c, #003528);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	height: 100vh;
+  background: linear-gradient(-45deg, #220038, #550243, #00202c, #003528);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
 }
 
 @keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-.form-container{
+.form-container {
   display: block;
   border: solid 1px var(--color-main);
   margin: 5% auto;
   width: 60%;
-  height: 70% ;
+  height: 70%;
   padding: 2% 8%;
   color: var(--color-main);
   border-radius: 35px;
   background-color: #0e04304f;
 }
-.Register-title{
+.Register-title {
   font-size: 24px;
   text-align: center;
 }
 
-.register-form div{
+.register-form div {
   display: flex;
   flex-direction: column;
   gap: 2%;
 }
-.register-form input{
+.register-form input {
   padding: 1%;
   border-radius: 15px;
   border: solid 1px var(--color-main);
@@ -264,21 +318,21 @@ z-index: 100;
   color: var(--color-main);
   font-size: larger;
 }
-.register-form button{
+.register-form button {
   padding: 1%;
   border-radius: 15px;
   border: solid 1px var(--color-main);
   margin: 1% 0;
-  background-color:var(--color-main);
+  background-color: var(--color-main);
   color: black;
   cursor: pointer;
 }
-.register-form button:hover{
+.register-form button:hover {
   border: solid 1px var(--color-main);
   background-color: transparent;
   color: var(--color-main);
 }
-.already-have-an-account a{
+.already-have-an-account a {
   text-decoration: none;
   color: #168600;
 }
@@ -379,14 +433,23 @@ z-index: 100;
   padding: 2%;
   font-size: 24px;
   color: #fff;
-  background: linear-gradient(45deg, #220038, #460037, #420344, #001b35, #220038, #460037, #00202c, #003528);
-	background-size: 400% 400%;
+  background: linear-gradient(
+    45deg,
+    #220038,
+    #460037,
+    #420344,
+    #001b35,
+    #220038,
+    #460037,
+    #00202c,
+    #003528
+  );
+  background-size: 400% 400%;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
-
 }
 
 .get-started-btn:hover {
@@ -426,9 +489,6 @@ z-index: 100;
   }
 }
 
-
-
-
 /***************Templates -- Profile ***************/
 .templates-container {
   display: flex;
@@ -441,8 +501,9 @@ z-index: 100;
 }
 .profile-section {
   height: 94vh;
-  padding: 1%;
-  background-color: #1e2a31b6;
+  width: 24%;
+  padding: 2%;
+  background-color: #1e2a31d2;
 }
 .user-details {
   height: 100%;
@@ -467,11 +528,22 @@ z-index: 100;
   border: none;
   margin-bottom: 6%;
 }
-.profile-pic{
-  display: block;
-  height: 15%;
+.profile-pic-div{
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 50%;
+  height: 15vh;
   margin: 0 auto;
+
+}
+.profile-pic {
+  display: block;
+  width:100%;
+  height:100%;
+  object-fit: fill;
   cursor: pointer;
+  margin: 0 auto;
 }
 .change-password {
   margin: 8% 0 9% 0;
@@ -484,12 +556,12 @@ z-index: 100;
   border-radius: 6px;
   cursor: pointer;
 }
-.save-profile{
+.save-profile {
   padding: 3%;
   cursor: pointer;
   border: solid 1px var(--color-main);
 }
-.save-profile:hover{
+.save-profile:hover {
   background-color: transparent;
   color: var(--color-main);
 }
@@ -517,8 +589,7 @@ z-index: 100;
   height: 100%;
   padding: 0 6%;
   margin: 0 auto;
-width: 100%;
-
+  width: 100%;
 }
 .Templates {
   display: flex;
@@ -530,19 +601,17 @@ width: 100%;
   cursor: pointer;
   animation: 1s ease-in-out;
 }
-.Templates:hover{
+.Templates:hover {
   scale: 1.05;
 }
-.template-title{
+.template-title {
   text-align: center;
   font-size: 16px;
   padding: 2%;
   color: var(--color-main);
 }
-.template-image{
-  height: 100%;
-}
-.template-edit, .template-delete{
+.template-edit,
+.template-delete {
   width: 48%;
   display: inline-block;
   margin: 2% 1%;
@@ -564,8 +633,11 @@ width: 100%;
   border-radius: 35px;
   z-index: 10;
   background-color: #0e0430ee;
-  top: 36%;
-  left: 36%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
   outline: solid 1px var(--color-main);
   box-shadow: 1px 10px 10px 100vh rgba(6, 8, 31, 0.699);
 }
@@ -581,13 +653,17 @@ width: 100%;
 }
 .Yes-button:hover,
 .delete-account:hover,
-.change-password:hover,.template-edit:hover, .template-delete:hover {
+.change-password:hover,
+.template-edit:hover,
+.template-delete:hover {
   outline: solid 1px white;
 }
-.confirm, .template-edit {
+.confirm,
+.template-edit {
   background-color: #168600;
 }
-.deny, .template-delete {
+.deny,
+.template-delete {
   background-color: #860000;
 }
 ::-webkit-scrollbar {
@@ -608,7 +684,7 @@ width: 100%;
 .card {
   position: relative;
   display: block;
-  height: 100%;
+  height: 28vh;
   border-radius: 10px;
   overflow: hidden;
   text-decoration: none;
@@ -618,7 +694,7 @@ width: 100%;
 
 .card__image {
   width: 100%;
-  height: auto;
+  max-height: 60%;
   object-fit: cover;
 }
 
@@ -660,7 +736,6 @@ width: 100%;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-
 }
 
 .card__title {

@@ -11,14 +11,13 @@ const UserSchema = new Schema(
     password: {
       type: String,
     },
-    status: {
+    image: {
       type: String,
-      default: "online",
     },
     templates:[],
     date: {
-      type: Date,
-      default: Date.now
+      type: String,
+      default: new Date().toLocaleString()
     },
     
   },

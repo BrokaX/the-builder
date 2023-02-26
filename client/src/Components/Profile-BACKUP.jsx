@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import {
   getAllTemplatesById,
@@ -7,44 +6,38 @@ import {
   updateUser,
   deleteUser,
   updateUserPassword,
-  getUser,
+  getUser
 } from "../apiHelpers";
 import Canvas from "./Canvas";
 export default function Profile() {
   const [template, setTemplate] = useState([]);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState(null);
-  const id = JSON.parse(localStorage.getItem("details")).id;
-  const [user, setUser] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
-console.log(user)
+  const id = JSON.parse(localStorage.getItem("details")).id
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("details")));
+  const [imageUrl, setImageUrl] = useState(
+    "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Clipart.png"
+  );
+  const fetchUserDetails = async () => {
+    try {
+      const userDetails = await getUser(id);
+     setUser(userDetails);
+     console.log(userDetails) 
+     return userDetails;
+      
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+  
+  //Get All Website templates from Server
   useEffect(() => {
     getAllTemplatesById()
       .then((data) => setTemplate(data))
       .catch((error) => console.log(error));
   }, []);
-  //EXPERIMENT
-  const [isPageLoad, setIsPageLoad] = useState(false);
-  const fetchUser = async () => {
-    try {
-      const userDetails = await getUser(id);
-      setUser(userDetails[0]);
-      setIsPageLoad(true);
-    } catch (error) {
-      console.error(error);
-      setIsPageLoad(true);
-    }
-  };
 
-  useEffect(() => {
-    fetchUser();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  window.onload = () => {
-    fetchUser();
-  };
-  const navigate = useNavigate();
   //Change User's profile PIC
 
   let pic;
@@ -63,8 +56,8 @@ console.log(user)
       );
       const urlData = await res.json();
       pic = urlData.url.toString();
-      setImageUrl(pic);
-      console.log(pic);
+      setImageUrl(pic)
+      console.log("%%%%" + pic);
     } catch (error) {}
   }
 
@@ -106,15 +99,13 @@ console.log(user)
   const handlePasswordChange = (event) => {
     setUser({ ...user, password: event.target.value });
   };
-  const handleImageChange = (event) => {
-    setUser({ ...user, image: event.target.value });
-  };
 
   //Change Password
   const resetPassword = async (e) => {
     e.preventDefault();
+    const id = user;
     try {
-      const res = await updateUserPassword(user, { password: user.password });
+      const res = await updateUserPassword(id);
       toast.success(`${res.message}`, {
         position: toast.POSITION.BOTTOM_RIGHT,
         style: { backgroundColor: "#1b3152", color: "#d7eefa" },
@@ -130,15 +121,16 @@ console.log(user)
   //Update user's details
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    const id = user;
     try {
-      const res = await updateUser(user, user.image = imageUrl);
+      const res = await updateUser(id);
+
       toast.success(`${res.message}`, {
-        
         position: toast.POSITION.BOTTOM_RIGHT,
         style: { backgroundColor: "#1b3152", color: "#d7eefa" },
       });
     } catch (error) {
-      console.log(error)
       toast.error(`${error.message}`, {
         position: toast.POSITION.BOTTOM_RIGHT,
         style: { backgroundColor: "#1b3152", color: "#d7eefa" },
@@ -157,14 +149,11 @@ console.log(user)
 
     if (result) {
       try {
-        const id = user._id;
+        const id = user.id;
         await deleteUser(id);
         localStorage.removeItem("details");
         localStorage.removeItem("user");
-        toast.warning(`Your account has been deleted`, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-          style: { backgroundColor: "#1b3152", color: "#d7eefa" },
-        });
+        window.location.href = "/register";
       } catch (error) {
         toast.error(`${error.message}`, {
           position: toast.POSITION.BOTTOM_RIGHT,
@@ -185,31 +174,28 @@ console.log(user)
       });
     }
   };
-  if (!isPageLoad) {
-    return <div>Loading...</div>;
-  }
+
   return (
     <div className="templates-container">
       <div className="profile-section">
         <div className="user-details">
+          <h4>Edit your Details {user.name}</h4>
+          <img
+            className="profile-pic"
+            src={!user.image? imageUrl : user.image}
+            alt="Profile"
+            onClick={() => document.getElementById("fileInput").click()}
+          />
+          <input
+            id="fileInput"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            style={{ display: "none" }}
+          />
+
           <div>
             <form className="profile-form" onSubmit={onSubmit}>
-              <h4>Edit your Details {user.name}</h4>
-              <div className="profile-pic-div">
-              <img
-                className="profile-pic"
-                src={imageUrl !== "" ? imageUrl : user.image}
-                alt="Profile"
-                onClick={() => document.getElementById("fileInput").click()}
-                onChange={handleImageChange}
-              /></div>
-              <input
-                id="fileInput"
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                style={{ display: "none" }}
-              />
               <label htmlFor="username">Username</label>
               <input
                 name="name"
@@ -217,7 +203,7 @@ console.log(user)
                 value={user.name}
                 onChange={handleUsernameChange}
                 required
-                minLength={3}
+                minLength={6}
               />
               <label htmlFor="email">Email</label>
               <input

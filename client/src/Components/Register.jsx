@@ -2,17 +2,22 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { userRegister, userLogin } from "../apiHelpers";
 import { useNavigate } from "react-router";
+// To handle notifications
+import { toast } from "react-toastify";
+
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
     password2: "",
+    image: "https://i.pinimg.com/originals/d2/ea/d8/d2ead876ae76ba7147f68e7d2417c5f3.png",
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const onChange = (e) => {
     setUser({ ...user, [e.target.id]: e.target.value });
+    setErrors("");
   };
 
   const onSubmit = async (e) => {
@@ -28,14 +33,25 @@ const Register = () => {
         res.password2 === "Passwords do not match"
       ) {
         setErrors(res);
-        console.log("1" + res);
+        toast.error("Failed to register user, please try again!", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          style: { backgroundColor: "#1b3152", color: "#d7eefa" },
+        });
       } else {
         await userLogin(res.email, res.password);
+        toast.success("Account successfully created, please go to log in", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          style: { backgroundColor: "#1b3152", color: "#d7eefa" },
+        });
         navigate("/login");
       }
     } catch (error) {
       if (error.message === "Email already exists") {
         setErrors({ ...errors, email: "Email already exists" });
+        toast.error("Email Already in use", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          style: { backgroundColor: "#1b3152", color: "#d7eefa" },
+        });
       }
     }
   };
@@ -47,6 +63,14 @@ const Register = () => {
           <h4>Create an Account</h4>
         </div>
         <form className="register-form" noValidate onSubmit={onSubmit}>
+          <input
+            hidden
+            readOnly
+            id="image"
+            name="image"
+            type="text"
+            value=""
+          />
           <div>
             <label htmlFor="name">Username</label>
             <input

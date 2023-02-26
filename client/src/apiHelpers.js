@@ -61,6 +61,7 @@ export const userRegister = async (user) => {
       email: user.email,
       password: user.password,
       password2: user.password2,
+      image: user.image,
     });
 
     const data = res.data;
@@ -107,12 +108,47 @@ export const userLogin = async (user) => {
     }
   }
 };
-
+export const getUser = async (id) => {
+  try {
+    const response = await axios.get(`/api/users/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching user with id ${id}: ${error}`);
+    return null;
+  }
+};
 export const updateUser = async (user) => {
-  const res = await axios.put(`/${user}`, {
-    id: user.id,
-    name: user.name,
-    email: user.email,
+  try {
+    const response = await axios.put(`/api/users/${user._id}`, {
+      name: user.name,
+      email: user.email,
+      image: user.image,
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+    } else if (error.request) {
+      console.error(error.request);
+    } else {console.error('Error', error);
+    }
+    throw error;
+  }
+};
+// export const updateUser = async (user) => {
+//   const res = await axios.put(`api/users/${user._id}`, {
+//     name: user.name,
+//     email: user.email,
+//     image: user.image,
+//   });
+//   const data = res;
+//   return data;
+// };
+
+export const updateUserPassword = async (user) => {
+  const res = await axios.put(`api/users/${user._id}/password`, {
     password: user.password,
   });
   const data = res.data;
@@ -120,7 +156,7 @@ export const updateUser = async (user) => {
 };
 
 //user logout
-export const logoutUser = () => {
+export const logoutUser = async () => {
   localStorage.removeItem("user");
   localStorage.removeItem("details");
 };

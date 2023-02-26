@@ -29,7 +29,6 @@ require("./config/passport.js")(passport);
 
 app.use("/api/users", userRouter);
 app.use("/templates", templateRouter);
-
 // test message
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the application." });
