@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //Handle Notifications
 import { toast } from "react-toastify";
@@ -13,6 +13,7 @@ import blocks from "grapesjs-blocks-basic";
 
 //API That handles saving the websites template
 import { templateSave } from "../apiHelpers";
+
 
 export default function Canvas() {
   const navigate = useNavigate();
@@ -34,20 +35,15 @@ export default function Canvas() {
       element.display = "none";
     }
   };
-  const { state } = useLocation();
-  const { html, css } = state ?? {};
+
   useEffect(() => {
     /* Creating the main builder's Canvas */
-    const initBuilder = () => {
     const builder = grapesjs.init({
       container: "#builder",
-      fromElement: true,
+      fromElement: false,
       width: "auto",
       height: "95vh",
-      storageManager: { 
-        type: "remote", 
-        autosave: true, 
-        autoload: true },
+      storageManager: { type: "local" },
       plugins: [plugin, forms, blocks],
     });
     /* Adding a custom Save button */
@@ -73,12 +69,9 @@ export default function Canvas() {
         run: changeStyle,
       },
     ]);
-    builder.setComponents(html);
-    builder.setStyle(css);
-    setBuilder(builder);}
-    initBuilder()
-  }, [html, css]);
 
+    setBuilder(builder);
+  }, []);
   const handleSave = async (e) => {
     e.preventDefault();
     try {
@@ -88,7 +81,7 @@ export default function Canvas() {
       const id = "";
       const template = { title, description, html, css, image, date, id };
       const res = await templateSave(template);
-      toast.success(`Template "${res.template.title}" Has been saved`, {
+      toast.success(`Template "${template.title}" Has been saved`, {
         position: toast.POSITION.BOTTOM_RIGHT,
         style: { backgroundColor: "#1b3152", color: "#d7eefa" },
       });
@@ -115,9 +108,7 @@ export default function Canvas() {
               <i className="fa fa-times" aria-hidden="true"></i>
             </span>
             <form onSubmit={handleSave}>
-              <h1 className="Canvas-template-title">
-                Add details to your template
-              </h1>
+              <h1 className="Canvas-template-title">Add details to your template</h1>
               <label>Title:</label>
               <input
                 type="text"
@@ -141,6 +132,7 @@ export default function Canvas() {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
                 onClick={() => setImage("")}
+                
               />
 
               <div className="modal-buttons">
