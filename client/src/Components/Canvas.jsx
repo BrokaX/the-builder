@@ -4,14 +4,14 @@ import { useNavigate, useLocation } from "react-router-dom";
 //Handle Notifications
 import { toast } from "react-toastify";
 
-//GrapesJS & Dependencies
+//GrapesJS & Plugins
 import grapesjs from "grapesjs";
 import "grapesjs/dist/css/grapes.min.css";
 import plugin from "grapesjs-preset-webpage";
 import forms from "grapesjs-plugin-forms";
 import blocks from "grapesjs-blocks-basic";
 
-//API That handles saving the websites template
+//Function That handles saving the websites template
 import { templateSave } from "../apiHelpers";
 
 export default function Canvas() {
@@ -24,6 +24,9 @@ export default function Canvas() {
   const [image, setImage] = useState(
     "https://www.lambdatest.com/blog/wp-content/uploads/2018/11/JPG-2.jpg"
   );
+  //Here we store the html/css from templates page (server)
+  const { state } = useLocation();
+  const { html, css } = state ?? {};
   //Custom function user to open the side menu
   const changeStyle = () => {
     const element = document.getElementsByClassName("gjs-pn-views-container")[0]
@@ -34,51 +37,54 @@ export default function Canvas() {
       element.display = "none";
     }
   };
-  const { state } = useLocation();
-  const { html, css } = state ?? {};
+
   useEffect(() => {
     /* Creating the main builder's Canvas */
     const initBuilder = () => {
-    const builder = grapesjs.init({
-      container: "#builder",
-      fromElement: true,
-      width: "auto",
-      height: "95vh",
-      storageManager: { 
-        type: "remote", 
-        autosave: true, 
-        autoload: true },
-      plugins: [plugin, forms, blocks],
-    });
-    /* Adding a custom Save button */
-    builder.Panels.addButton("options", [
-      {
-        id: "save",
-        className: "fa fa-floppy-o icon-blank",
-        command: function () {
-          setShowSaveModal(true);
+      const builder = grapesjs.init({
+        container: "#builder",
+        fromElement: true,
+        width: "auto",
+        height: "95vh",
+        storageManager: {
+          type: "remote",
+          autosave: true,
+          autoload: true,
         },
-        attributes: { title: "Save Template" },
-        togglable: false,
-      },
-    ]);
-    builder.Panels.addButton("views", [
-      {
-        id: "open-menu",
-        className: "fa-solid fa-bars",
-        command: changeStyle,
-        attributes: { title: "Open Menu", id: "open-menu", disabled: true },
-        active: false,
-        togglable: false,
-        run: changeStyle,
-      },
-    ]);
-    builder.setComponents(html);
-    builder.setStyle(css);
-    setBuilder(builder);}
-    initBuilder()
+        plugins: [plugin, forms, blocks],
+      });
+      /* Adding a custom Save button */
+      builder.Panels.addButton("options", [
+        {
+          id: "save",
+          className: "fa fa-floppy-o icon-blank",
+          command: function () {
+            setShowSaveModal(true);
+          },
+          attributes: { title: "Save Template" },
+          togglable: false,
+        },
+      ]);
+      //Adding a customer button to open side menu
+      builder.Panels.addButton("views", [
+        {
+          id: "open-menu",
+          className: "fa-solid fa-bars",
+          command: changeStyle,
+          attributes: { title: "Open Menu", id: "open-menu", disabled: true },
+          active: false,
+          togglable: false,
+          run: changeStyle,
+        },
+      ]);
+      builder.setComponents(html);
+      builder.setStyle(css);
+      setBuilder(builder);
+    };
+    initBuilder();
   }, [html, css]);
 
+  //Save template
   const handleSave = async (e) => {
     e.preventDefault();
     try {
@@ -92,7 +98,7 @@ export default function Canvas() {
         position: toast.POSITION.BOTTOM_RIGHT,
         style: { backgroundColor: "#1b3152", color: "#d7eefa" },
       });
-
+//When the save is clicked
       setShowSaveModal(false);
       navigate("/profile");
     } catch (error) {

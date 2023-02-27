@@ -11,7 +11,8 @@ const Register = () => {
     email: "",
     password: "",
     password2: "",
-    image: "https://i.pinimg.com/originals/d2/ea/d8/d2ead876ae76ba7147f68e7d2417c5f3.png",
+    image:
+      "https://i.pinimg.com/originals/d2/ea/d8/d2ead876ae76ba7147f68e7d2417c5f3.png",
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -63,14 +64,7 @@ const Register = () => {
           <h4>Create an Account</h4>
         </div>
         <form className="register-form" noValidate onSubmit={onSubmit}>
-          <input
-            hidden
-            readOnly
-            id="image"
-            name="image"
-            type="text"
-            value=""
-          />
+          <input hidden readOnly id="image" name="image" type="text" value="" />
           <div>
             <label htmlFor="name">Username</label>
             <input

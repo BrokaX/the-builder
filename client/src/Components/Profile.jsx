@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import loading from "../assets/loading.svg"
+
 import { toast } from "react-toastify";
 
 import {
@@ -139,10 +141,11 @@ export default function Profile() {
   };
 
   if (!isPageLoad) {
-    return <div>Loading...</div>;
+    return <div className="Loading templates-container"><div>Loading...</div><img src={loading} alt="" /></div>;
   }
   return (
     <div className="templates-container">
+      
       <div className="profile-section">
         <div className="user-details">
           <div>
