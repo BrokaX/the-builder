@@ -612,6 +612,7 @@ iframe html {
 }
 .template-edit,
 .template-delete {
+  z-index: 100;
   width: 48%;
   display: inline-block;
   margin: 2% 1%;
@@ -621,6 +622,9 @@ iframe html {
   border-radius: 5px;
   color: var(--color-main);
   cursor: pointer;
+}
+.page-preview{
+  height: 7vh;
 }
 .delete-warning {
   padding: 2%;
