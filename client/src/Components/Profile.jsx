@@ -56,7 +56,10 @@ export default function Profile() {
       const urlData = await res.json();
       pic = urlData.url.toString();
       setImageUrl(pic);
-      console.log(pic);
+      toast.success(`${"Successfully uploaded, please save your changes"}`, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        style: { backgroundColor: "#1b3152", color: "#d7eefa" },
+      });
     } catch (error) {}
   }
 
@@ -127,6 +130,7 @@ export default function Profile() {
         await deleteUser(id);
         localStorage.removeItem("details");
         localStorage.removeItem("user");
+        window.location.href="/"
         toast.warning(`Your account has been deleted`, {
           position: toast.POSITION.BOTTOM_RIGHT,
           style: { backgroundColor: "#1b3152", color: "#d7eefa" },

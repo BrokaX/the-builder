@@ -95,17 +95,18 @@ const TemplateList = ({ html, css }) => {
                         {template[index].description}
                       </p>
                       <div>
-                        <div className="page-preview"
+                        <div
+                          className="page-preview"
                           dangerouslySetInnerHTML={{
                             __html: template[index].html,
                           }}
                         ></div>
                         <button
-                            className="template-edit"
-                            onClick={() => handleOpenTemplate(template[index])}
-                          >
-                            Edit
-                          </button>
+                          className="template-edit"
+                          onClick={() => handleOpenTemplate(template[index])}
+                        >
+                          Edit
+                        </button>
                         <button
                           className="template-delete"
                           onClick={() =>
