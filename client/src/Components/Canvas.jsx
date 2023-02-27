@@ -26,7 +26,7 @@ export default function Canvas() {
   );
   //Here we store the html/css from templates page (server)
   const { state } = useLocation();
-  const { html, css } = state ?? {};
+  const { html, CSS } = state ?? {};
   //Custom function user to open the side menu
   const changeStyle = () => {
     const element = document.getElementsByClassName("gjs-pn-views-container")[0]
@@ -37,7 +37,11 @@ export default function Canvas() {
       element.display = "none";
     }
   };
-
+//Get token from local storage
+const getTokenFromLocalStorage = () => {
+  const token = localStorage.getItem("user");
+  return token ? token : "";
+};
   useEffect(() => {
     /* Creating the main builder's Canvas */
     const initBuilder = () => {
@@ -48,8 +52,21 @@ export default function Canvas() {
         height: "95vh",
         storageManager: {
           type: "remote",
+          stepsBeforeSave: 1,
+          urlStore: "/templates/save",
+          urlLoad: "/templates/saved",
+          storeCss: true,
+          storeStyles: true,
+          load: html, CSS,
+          contentTypeJson: true,
           autosave: true,
           autoload: true,
+          params: {},
+          headers: {
+            Authorization: `Bearer ${getTokenFromLocalStorage()}`,
+          },
+          credentials: "omit",
+          baseUrl: "http://localhost:5050",
         },
         plugins: [plugin, forms, blocks],
       });
@@ -70,35 +87,41 @@ export default function Canvas() {
         {
           id: "open-menu",
           className: "fa-solid fa-bars",
-          command: changeStyle,
+          command: function() {
+            builder.runCommand("open-blocks");
+            changeStyle();
+          },
           attributes: { title: "Open Menu", id: "open-menu", disabled: true },
-          active: false,
-          togglable: false,
-          run: changeStyle,
+          active: true,
+          togglable: true,
+          run: function() {
+            builder.runCommand("open-blocks");
+            changeStyle();
+          },
         },
       ]);
       builder.setComponents(html);
-      builder.setStyle(css);
+      builder.setStyle(CSS);
       setBuilder(builder);
     };
     initBuilder();
-  }, [html, css]);
+  }, [html, CSS]);
 
   //Save template
   const handleSave = async (e) => {
     e.preventDefault();
     try {
       const html = builder.getHtml();
-      const css = builder.getCss();
+      const CSS = builder.getCss();
       const date = new Date().toLocaleDateString();
       const id = "";
-      const template = { title, description, html, css, image, date, id };
+      const template = { title, description, html, CSS, image, date, id };
       const res = await templateSave(template);
       toast.success(`Template "${res.template.title}" Has been saved`, {
         position: toast.POSITION.BOTTOM_RIGHT,
         style: { backgroundColor: "#1b3152", color: "#d7eefa" },
       });
-//When the save is clicked
+      //When the save is clicked
       setShowSaveModal(false);
       navigate("/profile");
     } catch (error) {
@@ -112,7 +135,7 @@ export default function Canvas() {
   return (
     <div className="Canvas-container">
       <div className="builder" id="builder"></div>
-      <div className="Open-close" onClick={changeStyle}></div>
+      {/* <div className="Open-close" onClick={changeStyle}></div> */}
       {/* render the form/modal */}
       {showSaveModal && (
         <div className="save-template-form">

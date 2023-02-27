@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAllTemplatesById, deleteTemplate } from "../apiHelpers";
 
-const TemplateList = ({ html, css }) => {
+const TemplateList = ({ html, CSS }) => {
   const navigate = useNavigate();
   const [template, setTemplate] = useState([]);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
@@ -45,7 +45,7 @@ const TemplateList = ({ html, css }) => {
   };
 
   const handleOpenTemplate = (template) => {
-    navigate("/builder", { state: { html: template.html, css: template.css } });
+    navigate("/builder", { state: { html: template.html, CSS: template.CSS } });
   };
 
   return (
