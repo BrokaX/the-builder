@@ -8,8 +8,8 @@ const keys = require("../../config/keys");
 
 //All users
 const getUser = async (req, res) => {
-  const id = req.params.id
-  User.find({_id: id}, function (err, user) {
+  const id = req.params.id;
+  User.find({ _id: id }, function (err, user) {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -39,7 +39,6 @@ const Register = async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      
     });
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -50,7 +49,8 @@ const Register = async (req, res) => {
         }
 
         newUser.password = hash;
-        newUser.save()
+        newUser
+          .save()
           .then((user) => res.status(201).json(user))
           .catch((err) => {
             errors.save = "Error in saving user";
@@ -64,8 +64,6 @@ const Register = async (req, res) => {
   }
 };
 
-
-
 //Login
 const Login = async (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
@@ -77,7 +75,9 @@ const Login = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ emailnotfound: "Incorrect Email or Password" });
+      return res
+        .status(404)
+        .json({ emailnotfound: "Incorrect Email or Password" });
     }
     const isMatch = await bcrypt.compare(password, user.password); // add await here
     if (isMatch) {
@@ -90,9 +90,9 @@ const Login = async (req, res) => {
         date: user.date,
       };
       jwt.sign(
-        {id: payload.id},
+        { id: payload.id },
         keys.secretOrKey,
-        { expiresIn: "1d"},
+        { expiresIn: "1d" },
         (err, token) => {
           if (err) {
             throw err;
@@ -101,7 +101,7 @@ const Login = async (req, res) => {
             success: true,
             token: token,
             user: payload,
-            id: payload.id
+            id: payload.id,
           });
         }
       );
@@ -116,13 +116,12 @@ const Login = async (req, res) => {
   }
 };
 
-
 //Edit User
 const editUser = async (req, res) => {
   const id = req.params.id;
   const name = req.body.name;
   const email = req.body.email;
-  const image = req.body.image
+  const image = req.body.image;
   if (!id && !name && !email) {
     return res.status(442).json({ message: "Invalid Details" });
   }
@@ -161,7 +160,7 @@ const editUserPassword = async (req, res) => {
 //Delete user
 const deleteUser = async (req, res) => {
   const id = req.params.id;
-  console.log(id)
+  console.log(id);
   let user;
   try {
     user = await User.findByIdAndRemove(id);
@@ -174,4 +173,11 @@ const deleteUser = async (req, res) => {
   return res.status(200).json({ message: "User Successfully Deleted" });
 };
 
-module.exports = { getUser, Register, Login, editUser, deleteUser, editUserPassword };
+module.exports = {
+  getUser,
+  Register,
+  Login,
+  editUser,
+  deleteUser,
+  editUserPassword,
+};
