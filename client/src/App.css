@@ -9,7 +9,7 @@ body {
   background-color: var(--bg-sec);
 }
 html {
-  overflow: hidden;
+  overflow: auto;
 }
 
 .Canvas-container {

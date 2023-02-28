@@ -112,10 +112,10 @@ const getTokenFromLocalStorage = () => {
     e.preventDefault();
     try {
       const html = builder.getHtml();
-      const CSS = builder.getCss();
+      const css = builder.getCss();
       const date = new Date().toLocaleDateString();
       const id = "";
-      const template = { title, description, html, CSS, image, date, id };
+      const template = { title, description, html, css, image, date, id };
       const res = await templateSave(template);
       toast.success(`Template "${res.template.title}" Has been saved`, {
         position: toast.POSITION.BOTTOM_RIGHT,
