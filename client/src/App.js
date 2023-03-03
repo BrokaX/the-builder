@@ -6,12 +6,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // Components
 import Canvas from "./Components/Canvas";
-import Landing from "./Components/Landing";
-import Navbar from "./Components/Navbar";
+import Landing from "./Components/LandingPage/Landing";
+import Navbar from "./Components/NavBar/Navbar";
 import Register from "./Components/Register";
 import Login from "./Components/Login";
 import Profile from "./Components/Profile";
 import { Fragment } from "react";
+
 
 function App() {
   return (
@@ -19,7 +20,6 @@ function App() {
       <div className="App">
         <Navbar />
         <ToastContainer />
-
         <Routes>
           <Route exact path="/" element={<Landing />} />
           <Route exact path="/builder" element={<Canvas />} />

@@ -1,0 +1,46 @@
+* Nav Bar*/
+.Navar {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.Container-nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--bg-main);
+  color: var(--color-main);
+}
+
+.Menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: center;
+  font-size: 18px;
+  width: 20%;
+  height: 100%;
+  margin-right: 2%;
+}
+.Menu a,
+.Logo i {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  align-self: center;
+}
+.Logo {
+  align-self: center;
+}
+.Menu a,
+.Logo {
+  cursor: pointer;
+  padding: 1%;
+  text-decoration: none;
+  color: var(--color-main);
+}
+
+.Menu a:hover,
+.Logo:hover {
+  background-color: var(--bg-sec);
+  color: var(--color-third);
+}

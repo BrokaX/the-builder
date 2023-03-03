@@ -5,12 +5,8 @@
   box-sizing: border-box;
   font-family: Verdana, sans-serif;
 }
-body {
-  background-color: var(--bg-sec);
-}
-html {
-  overflow: auto;
-}
+
+
 
 .Canvas-container {
   height: 20%;
@@ -24,14 +20,11 @@ html {
   --color-sec: #9bbcd1;
   --color-third: #2d68a7;
 }
-iframe html {
-  overflow: scroll;
-}
 .gjs-one-bg .gjs-two-color,
 .gjs-one-bg {
   background-color: var(--bg-sec);
 }
-.gjs-pn-buttons {
+.gjs-pn-buttons, #open-menu {
   color: var(--color-sec);
   background-color: var(--bg-sec);
 }
@@ -220,111 +213,141 @@ iframe html {
   cursor: pointer;
   font-size: large;
 }
-/* Nav Bar*/
-.Navar {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-.Container-nav {
-  display: flex;
-  justify-content: space-between;
-  background-color: var(--bg-main);
-  color: var(--color-main);
-}
 
-.Menu {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-self: center;
-  font-size: 18px;
-  width: 20%;
-  height: 100%;
-  margin-right: 2%;
-}
-.Menu a,
-.Logo i {
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  align-self: center;
-}
-.Logo {
-  align-self: center;
-}
-.Menu a,
-.Logo {
-  cursor: pointer;
-  padding: 1%;
-  text-decoration: none;
-  color: var(--color-main);
-}
-
-.Menu a:hover,
-.Logo:hover {
-  background-color: var(--bg-sec);
-  color: var(--color-third);
-}
 /*************************** Login/Register******************/
 .Register-container {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background: linear-gradient(-45deg, #220038, #550243, #00202c, #003528);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+  background: linear-gradient(
+    to bottom left,
+    #79f2ec,
+    #09bcf3,
+    #073d77,
+    #022f5f
+  );
+  width: 100%;
   height: 100vh;
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 .form-container {
-  display: block;
+  display: flex;
   border: solid 1px var(--color-main);
   margin: 5% auto;
-  width: 60%;
-  height: 70%;
-  padding: 2% 8%;
+  width: 90%;
+  height: 75%;
+  padding: 6% 5%;
   color: var(--color-main);
   border-radius: 35px;
-  background-color: #0e04304f;
+  background-color: #000b13cc;
+  gap: 15%;
+  box-shadow: -20px 30px 50px 1px rgba(0, 0, 0, 0.726);
+}
+.form-left-side {
+  width: 50%;
+  position: relative;
+}
+.register-image{
+  display: block;
+  width: 15vw;
+  height: 30vh;
+  margin: auto;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  opacity: .8;
+}
+.pulse-effect {
+  background-color: #063d79a2;
+  width: 15vw;
+  height: 30vh;
+  border-radius: 100%;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.circle {
+  z-index: 1;
+  position: absolute;
+  background-color: inherit;
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  opacity: 0.5;
+  animation: pulse 3s ease-out infinite;
+}
+
+.circle:nth-of-type(1) {
+  animation-delay: -0.5s;
+}
+
+.circle:nth-of-type(2) {
+  animation-delay: -1s;
+}
+
+.circle:nth-of-type(3) {
+  animation-delay: -1.5s;
+}
+
+@keyframes pulse {
+  100% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+}
+
+.form-right-side {
+  display: block;
+  width: 50%;
+  height: 100%;
+  padding-left: 5%;
 }
 .Register-title {
   font-size: 24px;
-  text-align: center;
+  text-align: left;
 }
 
 .register-form div {
   display: flex;
   flex-direction: column;
-  gap: 2%;
 }
+input:-webkit-autofill {
+  -webkit-box-shadow:0 0 0 50px #333333 inset; 
+  -webkit-text-fill-color: #ffffff;
+}
+
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 50px #333333 inset;/*your box-shadow*/
+  -webkit-text-fill-color: #ffffff;
+} 
 .register-form input {
-  padding: 1%;
-  border-radius: 15px;
-  border: solid 1px var(--color-main);
+  padding: 1% 2%;
+  width: 60%;
+  border-radius: 5px;
+  border: solid .5px var(--color-main);
   margin: 1% 0;
   background-color: #33333383;
   color: var(--color-main);
-  font-size: larger;
+  font-size: 16px;
 }
+
 .register-form button {
-  padding: 1%;
-  border-radius: 15px;
+  padding: 1.5%;
+  width: 60%;
+  border-radius: 5px;
   border: solid 1px var(--color-main);
-  margin: 1% 0;
-  background-color: var(--color-main);
-  color: black;
+  margin: 4% 0;
+  background-color: rgb(37, 37, 158);
+  color: white;
   cursor: pointer;
 }
 .register-form button:hover {
@@ -338,156 +361,11 @@ iframe html {
 }
 .error {
   display: block;
-  color: red;
+  color: rgb(255, 24, 24);
 }
 /*************************** Landing Page ***********************************/
 
-.Landing-page {
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(rgba(29, 2, 51, 0.6), rgba(12, 1, 39, 0.6)),
-    url("./assets/bg1.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
 
-.Landing-page-main {
-  padding-top: 10%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 5%;
-}
-
-.Landing-page-main-left,
-.Landing-page-main-right {
-  width: 40%;
-  color: var(--color-main);
-}
-.Landing-page-main-left p {
-  margin: 10% 0;
-  text-align: justify;
-}
-.Landing-page-main-left button {
-  display: block;
-  padding: 2% 4%;
-  margin: 0 auto;
-  background-color: var(--color-third);
-  border: none;
-  border-radius: 5px;
-  width: 15rem;
-  color: var(--color-main);
-  font-size: 18px;
-  cursor: pointer;
-}
-.Landing-page-main-right img {
-  filter: sepia(5%), hue-rotate(10%);
-}
-
-.landing-page {
-  padding: 8% 0;
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(rgba(29, 2, 51, 0.6), rgba(12, 1, 39, 0.6)),
-    url("./assets/bg1.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-
-.landing-page-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 50px;
-  background-color: #ba31be36;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-}
-
-.landing-page-main-left {
-  width: 60%;
-  margin-right: 50px;
-}
-
-.landing-page-main-left h1 {
-  margin-bottom: 2%;
-  font-size: 40px;
-  color: var(--color-main);
-}
-
-.landing-page-main-left p {
-  font-size: 20px;
-  line-height: 1.5;
-  margin-bottom: 30px;
-  color: var(--color-main);
-  text-align: justify;
-}
-
-.get-started-btn {
-  display: inline-block;
-  padding: 2%;
-  font-size: 24px;
-  color: #fff;
-  background: linear-gradient(
-    45deg,
-    #220038,
-    #460037,
-    #420344,
-    #001b35,
-    #220038,
-    #460037,
-    #00202c,
-    #003528
-  );
-  background-size: 400% 400%;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-}
-
-.get-started-btn:hover {
-  outline: var(--color-main);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-  animation: gradient 10s ease infinite;
-  outline: solid 1px;
-}
-
-.landing-page-main-right img {
-  max-width: 100%;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-}
-.sliding-container {
-  border-radius: 15px;
-  width: 500px;
-  height: 400px;
-  overflow: hidden;
-  opacity: 0.6;
-}
-
-.sliding-background {
-  background: url("./assets/builder.png") repeat-x;
-  height: 560px;
-  width: 5076px;
-  animation: slide 60s linear infinite;
-}
-
-@keyframes slide {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-1692px, 0, 0);
-  }
-}
 
 /***************Templates -- Profile ***************/
 .Loading {
@@ -498,7 +376,7 @@ iframe html {
   position: relative;
 }
 .Loading div,
-.Loading img {
+.Loading svg {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -508,8 +386,9 @@ iframe html {
   text-align: center;
   padding-top: 15%;
 }
-.Loading img {
-  width: 6vw;
+.Loading svg {
+  width: 100%;
+  background: none;
 }
 .templates-container {
   display: flex;
@@ -519,6 +398,8 @@ iframe html {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  width: 100%;
+  height: 100%;
 }
 .profile-section {
   height: 94vh;

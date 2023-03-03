@@ -1,7 +1,8 @@
 import React from "react";
+import "./NavBar.css"
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { logoutUser } from "../apiHelpers";
+import { logoutUser } from "../../apiHelpers";
 
 export default function Navbar() {
   const user = JSON.parse(localStorage.getItem("details"));

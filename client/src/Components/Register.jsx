@@ -4,6 +4,7 @@ import { userRegister, userLogin } from "../apiHelpers";
 import { useNavigate } from "react-router";
 // To handle notifications
 import { toast } from "react-toastify";
+import login from "../assets/login.png"
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -60,71 +61,92 @@ const Register = () => {
   return (
     <div className="Register-container">
       <div className="form-container">
-        <div className="Register-title">
-          <h4>Create an Account</h4>
+        <div className="form-left-side">
+          <img
+            className="register-image" src={login}
+            alt="Register logo"
+          />
+          <div class="pulse-effect">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+          </div>
         </div>
-        <form className="register-form" noValidate onSubmit={onSubmit}>
-          <input hidden readOnly id="image" name="image" type="text" value="" />
-          <div>
-            <label htmlFor="name">Username</label>
+        <div className="form-right-side">
+          <div className="Register-title">
+            <h4>Create an Account</h4>
+          </div>
+          <form className="register-form" noValidate onSubmit={onSubmit}>
             <input
-              onChange={onChange}
-              value={user.name}
-              error={errors.name}
-              id="name"
+              hidden
+              readOnly
+              id="image"
+              name="image"
               type="text"
-              name="name"
+              value=""
             />
-            {errors.name && <span className="error">{errors.name}</span>}
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              onChange={onChange}
-              value={user.email}
-              error={errors.email}
-              id="email"
-              type="email"
-              name="email"
-            />
-            {errors.email && <span className="error">{errors.email}</span>}
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              onChange={onChange}
-              value={user.password}
-              error={errors.password}
-              id="password"
-              type="password"
-              name="password"
-            />
-            {errors.password && (
-              <span className="error">{errors.password}</span>
-            )}
-          </div>
-          <div>
-            <label htmlFor="password2">Confirm Password</label>
-            <input
-              onChange={onChange}
-              value={user.password2}
-              error={errors.password2}
-              id="password2"
-              name="password2"
-              type="password"
-            />
-            {errors.password2 && (
-              <span className="error">{errors.password2}</span>
-            )}
-          </div>
-          <div>
-            <button>Sign-up</button>
-          </div>
-          {errors.general && <span className="error">{errors.general}</span>}
-        </form>
-        <p className="already-have-an-account">
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
+            <div>
+              <label htmlFor="name">Username</label>
+              <input
+                onChange={onChange}
+                value={user.name}
+                error={errors.name}
+                id="name"
+                type="text"
+                name="name"
+              />
+              {errors.name && <span className="error">{errors.name}</span>}
+            </div>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                onChange={onChange}
+                value={user.email}
+                error={errors.email}
+                id="email"
+                type="email"
+                name="email"
+              />
+              {errors.email && <span className="error">{errors.email}</span>}
+            </div>
+            <div>
+              <label htmlFor="password">Password</label>
+              <input
+                onChange={onChange}
+                value={user.password}
+                error={errors.password}
+                id="password"
+                type="password"
+                name="password"
+              />
+              {errors.password && (
+                <span className="error">{errors.password}</span>
+              )}
+            </div>
+            <div>
+              <label htmlFor="password2">Confirm Password</label>
+              <input
+                onChange={onChange}
+                value={user.password2}
+                error={errors.password2}
+                id="password2"
+                name="password2"
+                type="password"
+              />
+              {errors.password2 && (
+                <span className="error">{errors.password2}</span>
+              )}
+            </div>
+            <div>
+              <button>Sign-up</button>
+            </div>
+            {errors.general && <span className="error">{errors.general}</span>}
+          </form>
+          <p className="already-have-an-account">
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

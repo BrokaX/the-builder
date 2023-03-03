@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import loading from "../assets/loading.svg"
+import AjaxLoader from "./AjaxLoading"
 
 import { toast } from "react-toastify";
 
@@ -145,7 +145,8 @@ export default function Profile() {
   };
 
   if (!isPageLoad) {
-    return <div className="Loading templates-container"><div>Loading...</div><img src={loading} alt="" /></div>;
+    return <div className="Loading templates-container"><div>Loading...</div><AjaxLoader/>
+    </div>;
   }
   return (
     <div className="templates-container">

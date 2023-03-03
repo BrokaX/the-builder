@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { userLogin, authHeader } from "../apiHelpers";
+import login from "../assets/login.png"
+
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
@@ -32,10 +34,8 @@ const Login = () => {
         });
       }
     } catch (error) {
-      console.log(error);
       if (error.emailnotfound === "Incorrect Email or Password") {
         setErrors({ ...error, emailnotfound: "Account not found" });
-        console.log(error);
       }
     }
     const res = await userLogin(user);
@@ -54,6 +54,19 @@ const Login = () => {
   return (
     <div className="Register-container">
       <div className="form-container">
+      <div className="form-left-side">
+          <img
+            className="register-image" src={login}
+            alt="Register logo"
+          />
+          <div class="pulse-effect">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+          </div>
+        </div>
+        <div className="form-right-side">
         <div className="Register-title">
           <h4>Login to your account</h4>
         </div>
@@ -99,6 +112,7 @@ const Login = () => {
         {errors.emailnotfound && (
           <span className="error">{errors.emailnotfound}</span>
         )}
+        </div>
       </div>
     </div>
   );

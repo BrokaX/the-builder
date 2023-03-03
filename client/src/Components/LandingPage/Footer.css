@@ -1,0 +1,26 @@
+.footer {
+  height: 25vh;
+  background: #112136;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer__social-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer__icon {
+  margin: 0 10px;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.footer__copyright {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: #fff;
+}
