@@ -546,8 +546,6 @@ input:-webkit-autofill:focus {
   outline: solid 1px var(--color-main);
   box-shadow: 1px 10px 10px 100vh rgba(6, 8, 31, 0.699);
 }
-.delete-warning p {
-}
 .Yes-button {
   color: var(--color-main);
   cursor: pointer;
