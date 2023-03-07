@@ -496,7 +496,7 @@ input:-webkit-autofill:focus {
   display: flex;
   border-radius: 30px;
   flex-direction: column;
-  width: 15rem;
+  width: 14rem;
   height: 15rem;
   position: relative;
   cursor: pointer;
@@ -528,7 +528,7 @@ input:-webkit-autofill:focus {
   height: 7vh;
 }
 .delete-warning {
-  padding: 2%;
+  padding: 1%;
   position: absolute;
   color: var(--color-main);
   font-size: 22px;
@@ -545,6 +545,9 @@ input:-webkit-autofill:focus {
   margin: auto;
   outline: solid 1px var(--color-main);
   box-shadow: 1px 10px 10px 100vh rgba(6, 8, 31, 0.699);
+}
+.delete-warning p{
+  font-size: 20px;
 }
 .Yes-button {
   color: var(--color-main);
